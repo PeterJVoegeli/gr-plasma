@@ -29,5 +29,6 @@ install(FILES
     pdu_file_source.h
     pulse_doppler.h
     cw_to_pulsed.h
+    pluto_radar.h
     DESTINATION include/gnuradio/plasma
 )
