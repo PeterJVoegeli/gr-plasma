@@ -20,4 +20,4 @@ except ModuleNotFoundError:
     pass
 
 # import any pure python here
-#
+from .phaser_radar import phaser_radar
