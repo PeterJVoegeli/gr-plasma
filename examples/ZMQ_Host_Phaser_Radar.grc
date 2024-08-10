@@ -1,0 +1,271 @@
+options:
+  parameters:
+    author: ''
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: ''
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: ZMQ_Host_Phaser_Radar
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: ZMQ_Host_Phaser_Radar
+    window_size: (1000,1000)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 8]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: bandwidth
+  id: variable
+  parameters:
+    comment: ''
+    value: samp_rate/2
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [513.75, 17.0]
+    rotation: 0
+    state: enabled
+- name: center_freq
+  id: variable
+  parameters:
+    comment: ''
+    value: '2400000000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [357.5, 15.75]
+    rotation: 0
+    state: enabled
+- name: n_pulse_cpi
+  id: variable
+  parameters:
+    comment: ''
+    value: '128'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [669.25, 18.25]
+    rotation: 0
+    state: enabled
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: '100000000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [213.75, 15.75]
+    rotation: 0
+    state: enabled
+- name: blocks_message_strobe_0
+  id: blocks_message_strobe
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: Command
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    msg: pmt.intern("Gain=x")
+    period: '1000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [212.5, 436.25]
+    rotation: 0.0
+    state: enabled
+- name: plasma_cw_to_pulsed_0
+  id: plasma_cw_to_pulsed
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    prf: 10e3
+    prf_key: radar:prf
+    samp_rate: samp_rate
+    sample_rate_key: core:sample_rate
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [273.75, 314.25]
+    rotation: 0.0
+    state: enabled
+- name: plasma_lfm_source_0
+  id: plasma_lfm_source
+  parameters:
+    affinity: ''
+    alias: ''
+    bandwidth: samp_rate/2
+    bandwidth_key: radar:bandwidth
+    comment: ''
+    duration_key: radar:duration
+    label_key: core:label
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    prf: '0'
+    prf_key: radar:prf
+    pulse_width: 10e-6
+    samp_rate: samp_rate
+    sample_rate_key: core:sample_rate
+    start_freq: -samp_rate/4
+    start_freq_key: radar:start_freq
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [15.75, 113.0]
+    rotation: 0
+    state: true
+- name: plasma_pulse_doppler_0
+  id: plasma_pulse_doppler
+  parameters:
+    affinity: ''
+    alias: ''
+    backend: plasma.Device.CPU
+    comment: ''
+    depth: '100'
+    doppler_fft_size_key: doppler_fft_size
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    n_pulse_cpi: n_pulse_cpi
+    nfft: n_pulse_cpi
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [847.0, 138.75]
+    rotation: 0
+    state: enabled
+- name: plasma_pulse_to_cpi_0
+  id: plasma_pulse_to_cpi
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    n_pulse_cpi: n_pulse_cpi
+    n_pulse_cpi_key: radar:n_pulse_cpi
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [562.0, 183.5]
+    rotation: 0
+    state: enabled
+- name: plasma_range_doppler_sink_0
+  id: plasma_range_doppler_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    center_freq: center_freq
+    center_freq_key: core:frequency
+    comment: ''
+    depth: '1'
+    detection_indices_key: detection_indices
+    dynamic_range: '60'
+    dynamic_range_key: dynamic_range
+    gui_hint: ''
+    n_matrix_col_key: n_matrix_col
+    nrow: '128'
+    prf_key: radar:prf
+    pulsewidth_key: radar:duration
+    samp_rate: samp_rate
+    samp_rate_key: core:sample_rate
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [848.75, 275.0]
+    rotation: 180.0
+    state: enabled
+- name: zeromq_pull_msg_source_0
+  id: zeromq_pull_msg_source
+  parameters:
+    address: tcp://192.168.137.84:5001
+    affinity: ''
+    alias: ''
+    bind: 'False'
+    comment: Rx Pull
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    timeout: '100'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [277.5, 175.0]
+    rotation: 0.0
+    state: enabled
+- name: zeromq_push_msg_sink_0
+  id: zeromq_push_msg_sink
+  parameters:
+    address: tcp://192.168.137.84:2001
+    affinity: ''
+    alias: ''
+    bind: 'True'
+    comment: Tx Push
+    timeout: '100'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [567.5, 313.75]
+    rotation: 0.0
+    state: enabled
+- name: zeromq_push_msg_sink_0_0
+  id: zeromq_push_msg_sink
+  parameters:
+    address: tcp://192.168.137.84:3001
+    affinity: ''
+    alias: ''
+    bind: 'True'
+    comment: Command Push
+    timeout: '100'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [577.5, 436.25]
+    rotation: 0.0
+    state: enabled
+
+connections:
+- [blocks_message_strobe_0, strobe, zeromq_push_msg_sink_0_0, in]
+- [plasma_cw_to_pulsed_0, out, zeromq_push_msg_sink_0, in]
+- [plasma_lfm_source_0, out, plasma_cw_to_pulsed_0, in]
+- [plasma_lfm_source_0, out, plasma_pulse_doppler_0, tx]
+- [plasma_pulse_doppler_0, out, plasma_range_doppler_sink_0, in]
+- [plasma_pulse_to_cpi_0, out, plasma_pulse_doppler_0, rx]
+- [zeromq_pull_msg_source_0, out, plasma_pulse_to_cpi_0, in]
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.10.0

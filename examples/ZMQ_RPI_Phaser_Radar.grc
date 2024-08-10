@@ -1,0 +1,127 @@
+options:
+  parameters:
+    author: analog
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: ''
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: ZMQ_RPI_Phaser_Radar
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: Not titled yet
+    window_size: ''
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 8]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: '32000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [184, 12]
+    rotation: 0
+    state: enabled
+- name: phaser_phaser_radar_0
+  id: phaser_phaser_radar
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    rx_freq_key: core:rx_freq
+    sample_rate: samp_rate
+    sample_start_key: core:sample_start
+    tx_freq_key: core:tx_freq
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [352, 208.0]
+    rotation: 0
+    state: enabled
+- name: zeromq_pull_msg_source_0
+  id: zeromq_pull_msg_source
+  parameters:
+    address: tcp://192.168.137.84:3001
+    affinity: ''
+    alias: ''
+    bind: 'False'
+    comment: Command Pull
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    timeout: '100'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [32, 260.0]
+    rotation: 0
+    state: enabled
+- name: zeromq_pull_msg_source_1
+  id: zeromq_pull_msg_source
+  parameters:
+    address: tcp://192.168.137.84:2001
+    affinity: ''
+    alias: ''
+    bind: 'False'
+    comment: Tx Pull
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    timeout: '100'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [34.5, 151.75]
+    rotation: 0
+    state: enabled
+- name: zeromq_push_msg_sink_0
+  id: zeromq_push_msg_sink
+  parameters:
+    address: tcp://192.168.137.84:5001
+    affinity: ''
+    alias: ''
+    bind: 'True'
+    comment: Rx Push
+    timeout: '100'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [588.25, 202.0]
+    rotation: 0
+    state: enabled
+
+connections:
+- [phaser_phaser_radar_0, out, zeromq_push_msg_sink_0, in]
+- [zeromq_pull_msg_source_0, out, phaser_phaser_radar_0, control]
+- [zeromq_pull_msg_source_1, out, phaser_phaser_radar_0, in]
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.10.0
