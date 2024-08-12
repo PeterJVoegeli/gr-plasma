@@ -1,0 +1,33 @@
+id: Plasma_phaser_radar
+label: phaser_radar
+category: '[Plasma]'
+flags: [throttle]
+
+parameters:
+- id: sample_rate
+  label: sample rate
+  dtype: int
+  default: samp_rate
+
+inputs:
+- label: in
+  domain: message
+  dtype: message
+  optional: True
+- label: control
+  domain: message
+  dtype: message
+  optional: True
+
+outputs:
+- label: out
+  domain: message
+  dtype: ...
+  optional: True
+
+templates:
+  imports: from gnuradio import Plasma
+  make: Plasma.phaser_radar(${sample_rate})
+#  'file_format' specifies the version of the GRC yml format used in the file
+#  and should usually not be changed.
+file_format: 1
