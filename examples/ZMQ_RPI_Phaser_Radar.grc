@@ -45,8 +45,8 @@ blocks:
     coordinate: [184, 12]
     rotation: 0
     state: enabled
-- name: phaser_phaser_radar_0
-  id: phaser_phaser_radar
+- name: plasma_phaser_radar_0
+  id: plasma_phaser_radar
   parameters:
     affinity: ''
     alias: ''
@@ -118,9 +118,9 @@ blocks:
     state: enabled
 
 connections:
-- [phaser_phaser_radar_0, out, zeromq_push_msg_sink_0, in]
-- [zeromq_pull_msg_source_0, out, phaser_phaser_radar_0, control]
-- [zeromq_pull_msg_source_1, out, phaser_phaser_radar_0, in]
+- [plasma_phaser_radar_0, out, zeromq_push_msg_sink_0, in]
+- [zeromq_pull_msg_source_0, out, plasma_phaser_radar_0, control]
+- [zeromq_pull_msg_source_1, out, plasma_phaser_radar_0, in]
 
 metadata:
   file_format: 1
