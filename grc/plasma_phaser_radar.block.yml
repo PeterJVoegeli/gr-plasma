@@ -1,6 +1,6 @@
-id: Plasma_phaser_radar
+id: plasma_phaser_radar
 label: phaser_radar
-category: '[Plasma]'
+category: '[plasma]'
 flags: [throttle]
 
 parameters:
