@@ -49,6 +49,10 @@ target_link_libraries(gnuradio-plasma
     nlohmann_json::nlohmann_json
     plasma_dsp
     ArrayFire::af)
+if(UHD)
+    target_link_libraries(gnuradio-plasma 
+    PUBLIC
+    ${UHD_LIBRARIES})
 
 target_include_directories(gnuradio-plasma
     PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../include>
