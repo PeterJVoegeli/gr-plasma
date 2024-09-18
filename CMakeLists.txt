@@ -108,7 +108,7 @@ find_package(PythonLibs 3)
 find_package(pybind11 REQUIRED)
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qwt REQUIRED)
-find_package(UHD REQUIRED)
+find_package(UHD)
 
 include(FetchContent)
 if (NOT TARGET nlohmann_json)
