@@ -18,7 +18,6 @@ install(FILES
     pmt_constants.h
     qt_update_events.h
     range_doppler_sink.h 
-    usrp_radar.h
     waveform_controller.h
     match_filt.h
     doppler_processing.h
@@ -31,3 +30,6 @@ install(FILES
     cw_to_pulsed.h
     DESTINATION include/gnuradio/plasma
 )
+if(UHD)
+    install(FILES
+        usrp_radar.h)
