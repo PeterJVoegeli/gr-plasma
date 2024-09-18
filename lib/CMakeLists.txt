@@ -13,7 +13,6 @@ include(GrPlatform) #define LIB_SUFFIX
 list(APPEND plasma_sources
     lfm_source_impl.cc
     waveform_controller_impl.cc
-    usrp_radar_impl.cc
     pdu_file_sink_impl.cc
     pdu_head_impl.cc
     pcfm_source_impl.cc
@@ -31,7 +30,9 @@ list(APPEND plasma_sources
     pulse_doppler_impl.cc
     cw_to_pulsed_impl.cc
     )
-
+if(UHD)
+    list(APPEND plasma_sources
+        usrp_radar_impl.cc)
 set(plasma_sources "${plasma_sources}" PARENT_SCOPE)
 if(NOT plasma_sources)
     MESSAGE(STATUS "No C++ sources... skipping lib/")
@@ -45,7 +46,6 @@ target_link_libraries(gnuradio-plasma
     Qt5::Widgets
     qwt::qwt
     Python::Python
-    ${UHD_LIBRARIES}
     nlohmann_json::nlohmann_json
     plasma_dsp
     ArrayFire::af)
